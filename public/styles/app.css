@@ -4,6 +4,7 @@
 @import url('components/_forms.css');
 @import url('components/_containers.css');
 @import url('components/_nav.css');
+@import url('components/_footer.css');
 
 body {
     font-family: var(--font-primary);

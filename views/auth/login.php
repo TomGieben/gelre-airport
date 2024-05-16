@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container container-sm">
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Login</h3>
@@ -13,7 +13,7 @@
                     <label for="password">Wachtwoord</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-secondary">Login</button>
                 <a href="/register" class="btn btn-link">Registreer</a>
             </form>
         </div>

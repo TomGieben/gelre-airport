@@ -17,7 +17,7 @@
                     <label for="password">Wachtwoord</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Registreer</button>
+                <button type="submit" class="btn btn-secondary">Registreer</button>
             </form>
         </div>
     </div>

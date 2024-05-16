@@ -13,7 +13,7 @@ Route::get('/flights', [FlightController::class, 'index']);
 Route::get('/luggage', [LuggageController::class, 'index']);
 Route::get('/flight-info', [UserController::class, 'flights']);
 Route::get('/passengers', [PassengerController::class, 'index']);
-Route::get('/user', [UserController::class, 'me']);
+Route::get('/me', [UserController::class, 'me']);
 
 // Auth routes
 Route::get('/login', [AuthController::class, 'showLogin'], false);

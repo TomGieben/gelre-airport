@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $env['APP_NAME'] ?></title>
     <link rel="stylesheet" href="public/styles/app.css">
+    <link rel="icon" type="image/x-icon" href="public/images/favicon.png">
 </head>
 <body>
     <header class="bg-primary">
@@ -25,7 +26,7 @@
                     <?php endif ?>
 
                     <?php if (App\Helpers\Auth::check()): ?>
-                        <li><a href="/user">Jouw account</a></li>
+                        <li><a href="/me">Jouw account</a></li>
                         <li>
                             <form method="POST" action="/logout">
                                 <button type="submit">Uitloggen</button>
@@ -43,5 +44,11 @@
     <main class="wrapper">
         @content
     </main>
+
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2024 <?= $env['APP_NAME'] ?>. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
 </body>
 </html>

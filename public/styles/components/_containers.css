@@ -3,3 +3,7 @@
     margin: 0 auto;
     padding: 0 20px;
 }
+
+.container-sm {
+    max-width: calc(var(--container-max-width) / 3 * 2);
+} 
