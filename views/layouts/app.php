@@ -26,7 +26,11 @@
 
                     <?php if (isset($_SESSION['user'])): ?>
                         <li><a href="/user">Jouw account</a></li>
-                        <li><a href="/logout">Uitloggen</a></li>
+                        <li>
+                            <form method="POST" action="/logout">
+                                <button type="submit">Uitloggen</button>
+                            </form>
+                        </li>
                     <?php endif ?>
                 </ul>
             </nav>

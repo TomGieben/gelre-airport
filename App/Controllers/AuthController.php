@@ -14,7 +14,9 @@ class AuthController {
 
     public static function login(Request $request)
     {
-        var_dump($request); die;
+        $_SESSION['user'] = $request;
+
+        return Response::redirect('/');
     }
 
     public static function showRegister()

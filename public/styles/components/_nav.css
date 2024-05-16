@@ -69,7 +69,7 @@ nav ul{
     margin: 0;
     padding: 0;
     list-style: none;
-    margin-left : 1em;
+    margin-left : 0.5em;
 }
 
 nav li{
@@ -79,10 +79,20 @@ nav li{
 nav a{
     color: white;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-decoration: uppercase;
     opacity: 0;
     transition: opacity 150ms ease-in-out;
+}
+
+nav form button {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    text-decoration: uppercase;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 nav a:hover {
@@ -133,24 +143,6 @@ nav a:hover {
     nav a{
         opacity: 1;
         position: relative;
-    }
-
-    nav a::before{
-        content: '';
-        display: block;
-        height: 5px;
-        background: white;
-        position: absolute;
-        top: -0.75em;
-        left: 0;
-        right: 0;
-        transform: scale(0, 1);
-        transition: transform ease-in-out 250ms;
-        box-shadow: 0 0 1em 0 white;
-    }
-
-    nav a:hover::before{
-        transform: scale(1,1);
     }
 }
 
