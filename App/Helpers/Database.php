@@ -7,10 +7,11 @@ use PDO;
 use PDOException;
 use PDOStatement;
 
-class Database {
+class Database
+{
     private string $host;
     private string $username;
-    private string$password;
+    private string $password;
     private string $database;
     private PDO $pdo;
 
@@ -22,7 +23,8 @@ class Database {
      * @param string $password
      * @param string $database
      */
-    public function __construct($host, $username, $password, $database) {
+    public function __construct($host, $username, $password, $database)
+    {
         $this->host = $host;
         $this->username = $username;
         $this->password = $password;

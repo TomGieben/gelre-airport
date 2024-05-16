@@ -4,11 +4,13 @@ namespace App\Helpers;
 
 use App\Enums\RequestMethod;
 
-class Request {
+class Request
+{
     private array $requestParameters = [];
     public array $methodParameters = [];
 
-    function __construct() {
+    function __construct()
+    {
         $this->requestParameters = $this->parseRequestParameters();
     }
 
@@ -134,7 +136,7 @@ class Request {
             $parameters = $_GET;
 
             // Remove the file parameter from the request parameters
-            if(!empty($parameters)) {
+            if (!empty($parameters)) {
                 unset($parameters['file']);
             }
         }

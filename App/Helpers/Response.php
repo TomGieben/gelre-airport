@@ -2,7 +2,8 @@
 
 namespace App\Helpers;
 
-class Response {
+class Response
+{
     const LOGIN_ROUTE = '/login';
 
     public static function redirect(string $url): void
@@ -10,7 +11,7 @@ class Response {
         header("Location: $url");
         exit;
     }
-    
+
     /**
      * Send error response with specified code and message.
      * @param int $code The HTTP status code.

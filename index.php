@@ -12,11 +12,11 @@ session_start();
 
 global $database;
 
-if(!isset($env) || empty($env)) {
+if (!isset($env) || empty($env)) {
     die('Environment configuration not found.');
 }
 
-if(!($database instanceof Database)) {
+if (!($database instanceof Database)) {
     $database = Database::config(
         $env['DB_HOST'],
         $env['DB_USERNAME'],

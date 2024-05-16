@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum RequestMethod {
+enum RequestMethod
+{
     case GET;
     case POST;
     case PUT;

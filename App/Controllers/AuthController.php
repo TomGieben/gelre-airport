@@ -7,7 +7,8 @@ use App\Helpers\Response;
 use App\Helpers\View;
 use App\Models\User;
 
-class AuthController {
+class AuthController
+{
     public static function showLogin()
     {
         return new View('auth/login');
@@ -29,13 +30,14 @@ class AuthController {
 
     public static function register(Request $request)
     {
-        var_dump($request); die;
+        var_dump($request);
+        die;
     }
 
     public static function logout()
     {
         session_destroy();
-        
+
         return Response::redirect(Response::LOGIN_ROUTE);
     }
 }

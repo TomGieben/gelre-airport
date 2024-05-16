@@ -2,7 +2,8 @@
 
 namespace App\Helpers;
 
-class View {
+class View
+{
     private string $path = __DIR__ . '/../../views/';
     private string $view;
     private array $data;

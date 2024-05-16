@@ -100,7 +100,7 @@ abstract class BaseModel
         $stmt = $this->database->query($sql, $params);
         $data = $stmt->fetch();
 
-        if(!$data) {
+        if (!$data) {
             return false;
         }
 
@@ -121,7 +121,7 @@ abstract class BaseModel
         $sql = "INSERT INTO $this->table ($columns) VALUES ($values)";
         $stmt = $this->database->query($sql, array_values($data));
 
-        if(!$stmt) {
+        if (!$stmt) {
             return false;
         }
 
@@ -136,7 +136,7 @@ abstract class BaseModel
      */
     public function update(array $data): self|false
     {
-        $columns = array_map(fn($column) => "$column = ?", array_keys($data));
+        $columns = array_map(fn ($column) => "$column = ?", array_keys($data));
         $conditions = [];
         $params = [];
 
@@ -149,7 +149,7 @@ abstract class BaseModel
         $sql = "UPDATE $this->table SET " . implode(', ', $columns) . " WHERE " . implode(' AND ', $conditions);
         $stmt = $this->database->query($sql, [...array_values($data), ...$params]);
 
-        if(!$stmt) {
+        if (!$stmt) {
             return false;
         }
 

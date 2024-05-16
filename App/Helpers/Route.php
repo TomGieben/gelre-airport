@@ -5,7 +5,8 @@ namespace App\Helpers;
 use App\Enums\RequestMethod;
 use ReflectionMethod;
 
-class Route {
+class Route
+{
     private RequestMethod $method;
     private string $route;
     private $callback;
@@ -20,8 +21,8 @@ class Route {
      * @param callable $callback The callback function to execute.
      */
     function __construct(
-        RequestMethod $method, 
-        string $route, 
+        RequestMethod $method,
+        string $route,
         callable $callback,
         bool $requiresAuthentication = true
     ) {
@@ -145,9 +146,9 @@ class Route {
             $matches = [];
 
             if (self::matchesRoute($uri, $route, $method, $matches)) {
-                if($route['requiresAuthentication'] && !Request::isAuthenticated()) {
+                if ($route['requiresAuthentication'] && !Request::isAuthenticated()) {
                     return Response::redirect(Response::LOGIN_ROUTE);
-                } 
+                }
 
                 $parameters = self::resolveParameters($route, $matches);
 
@@ -170,7 +171,7 @@ class Route {
     private static function matchesRoute(string $uri, array $route, string $method, array &$matches): bool
     {
         $routePattern = preg_replace('/\/{(\w+)}/', '/(?P<$1>[^/]+)', $route['route']);
-        
+
         if (preg_match("#^{$routePattern}$#", $uri, $matches)) {
             if ($method !== $route['method']->name) {
                 return false;
@@ -178,7 +179,7 @@ class Route {
 
             array_shift($matches);
 
-            foreach($matches as $key => $match) {
+            foreach ($matches as $key => $match) {
                 if (is_numeric($key)) {
                     unset($matches[$key]);
                 }
@@ -203,7 +204,7 @@ class Route {
         $callback = $route['callback'];
         $methodReflection = (new ReflectionMethod($callback[0], $callback[1]))->getParameters();
         $hasRequest = false;
-        
+
         $parameters = array_merge($parameters, $matches);
 
         foreach ($methodReflection as $reflection) {
@@ -221,12 +222,12 @@ class Route {
                         'name' => $reflection->name,
                         'type' => $className
                     ];
-      
+
                     continue;
                 }
 
                 // Check if the parameter is missing and is not optional
-                if(!in_array($reflection->name, array_keys($parameters)) && !$reflection->isOptional()) {
+                if (!in_array($reflection->name, array_keys($parameters)) && !$reflection->isOptional()) {
                     Response::error(400, $reflection->name . ' parameter is missing');
                 }
 
@@ -277,23 +278,24 @@ class Route {
     {
         global $routes;
 
-        if(!isset($routes) || !is_array($routes)) {
+        if (!isset($routes) || !is_array($routes)) {
             return false;
         }
 
         foreach ($routes as $existingRoute) {
             if ($existingRoute['method'] === $this->method && $existingRoute['route'] === $this->route) {
-                return true; 
+                return true;
             }
         }
 
-        return false; 
+        return false;
     }
 
     /**
      * Register the route in the global routes array.
      */
-    private function register(): void {
+    private function register(): void
+    {
         global $routes;
 
         if ($this->alreadyExists()) {

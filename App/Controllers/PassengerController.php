@@ -4,9 +4,9 @@ namespace App\Controllers;
 
 use App\Helpers\Request;
 
-class PassengerController {
+class PassengerController
+{
     public static function index(Request $request)
     {
-        
     }
 }

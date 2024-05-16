@@ -2,7 +2,8 @@
 
 namespace App\Helpers;
 
-class Config {
+class Config
+{
     private static array $cache = [];
 
     /**
