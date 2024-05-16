@@ -14,6 +14,14 @@ class Database {
     private string $database;
     private PDO $pdo;
 
+    /**
+     * Database constructor.
+     * 
+     * @param string $host
+     * @param string $username
+     * @param string $password
+     * @param string $database
+     */
     public function __construct($host, $username, $password, $database) {
         $this->host = $host;
         $this->username = $username;
@@ -23,11 +31,28 @@ class Database {
         $this->connect();
     }
 
+    /**
+     * Create a new instance of the Database class.
+     * 
+     * @param string $host
+     * @param string $username
+     * @param string $password
+     * @param string $database
+     * 
+     * @return Database
+     */
     public static function config(string $host, string $username, string $password, string $database): self
     {
         return new self($host, $username, $password, $database);
     }
 
+    /**
+     * Connect to the database.
+     * 
+     * @return void
+     * 
+     * @throws Exception
+     */
     private function connect(): void
     {
         $dsn = "mysql:host=$this->host;dbname=$this->database;charset=utf8mb4";
@@ -41,6 +66,14 @@ class Database {
         }
     }
 
+    /**
+     * Execute a query with the specified SQL and parameters.
+     * 
+     * @param string $sql
+     * @param array $params
+     * 
+     * @return PDOStatement|false
+     */
     public function query(string $sql, array $params = []): PDOStatement|false
     {
         $stmt = $this->pdo->prepare($sql);
@@ -49,6 +82,11 @@ class Database {
         return $stmt;
     }
 
+    /**
+     * Get the last inserted ID.
+     * 
+     * @return string
+     */
     public function lastInsertId(): string
     {
         return $this->pdo->lastInsertId();

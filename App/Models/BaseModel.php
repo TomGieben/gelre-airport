@@ -11,8 +11,15 @@ abstract class BaseModel
     protected array $columns = [];
     protected Database $database;
 
-    public function __construct(array $data)
+    /**
+     * BaseModel constructor.
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data = [])
     {
+        error_reporting(E_ALL ^ E_DEPRECATED); // Disable deprecated errors
+
         global $database;
 
         $this->database = $database;
@@ -24,11 +31,21 @@ abstract class BaseModel
         }
     }
 
+    /*
+    * Query builder
+    *
+    * @return self
+    */
     public static function query(): self
     {
-        return new self([]);
+        return new self();
     }
 
+    /**
+     * Get all models
+     *
+     * @return array
+     */
     public function all(): array
     {
         $sql = "SELECT * FROM $this->table";
@@ -43,6 +60,14 @@ abstract class BaseModel
         return $models;
     }
 
+    /**
+     * Get all models with a where clause
+     *
+     * @param string $column
+     * @param string $operator
+     * @param mixed $value
+     * @return array
+     */
     public function raw(string $sql, array $params = []): array
     {
         $stmt = $this->database->query($sql, $params);
@@ -55,6 +80,12 @@ abstract class BaseModel
         return $models;
     }
 
+    /**
+     * Find a model by primary key
+     *
+     * @param array $primaryKeys
+     * @return self|false
+     */
     public function find(array $primaryKeys): self|false
     {
         $conditions = [];
@@ -76,6 +107,12 @@ abstract class BaseModel
         return new static($data);
     }
 
+    /**
+     * Create a new model
+     *
+     * @param array $data
+     * @return self|false
+     */
     public function create(array $data): self|false
     {
         $columns = implode(', ', array_keys($data));
@@ -91,6 +128,12 @@ abstract class BaseModel
         return $this->find($data);
     }
 
+    /**
+     * Update a model
+     *
+     * @param array $data
+     * @return self|false
+     */
     public function update(array $data): self|false
     {
         $columns = array_map(fn($column) => "$column = ?", array_keys($data));
@@ -113,6 +156,11 @@ abstract class BaseModel
         return $this->find($params);
     }
 
+    /**
+     * Delete a model
+     *
+     * @return bool
+     */
     public function delete(): bool
     {
         $conditions = [];

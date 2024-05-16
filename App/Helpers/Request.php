@@ -18,11 +18,7 @@ class Request {
      */
     public static function isAuthenticated(): bool
     {
-        if(!isset($_SESSION['user']) || !$_SESSION['user']) {
-            return false;
-        }
-
-        return true;
+        return Auth::check();
     }
 
     /**

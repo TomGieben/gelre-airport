@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Helpers\Request;
 use App\Helpers\Response;
 use App\Helpers\View;
+use App\Models\User;
 
 class AuthController {
     public static function showLogin()
@@ -14,7 +15,9 @@ class AuthController {
 
     public static function login(Request $request)
     {
-        $_SESSION['user'] = $request;
+        $parameters = $request->getRequestParameters();
+
+        $_SESSION['user'] = $parameters['email'];
 
         return Response::redirect('/');
     }

@@ -1,3 +1,5 @@
 <?php
 
-echo $name;
+use App\Helpers\Auth;
+
+echo Auth::user()->email;

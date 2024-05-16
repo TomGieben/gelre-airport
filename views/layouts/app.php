@@ -24,7 +24,7 @@
                         <li><a href="/passengers">Passagiers</a></li>
                     <?php endif ?>
 
-                    <?php if (isset($_SESSION['user'])): ?>
+                    <?php if (App\Helpers\Auth::check()): ?>
                         <li><a href="/user">Jouw account</a></li>
                         <li>
                             <form method="POST" action="/logout">
