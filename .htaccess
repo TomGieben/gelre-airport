@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Als het verzoek al naar een bestaand bestand of directory verwijst, stop dan met de verdere verwerking
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Alle andere verzoeken worden doorgestuurd naar index.php
+    RewriteRule ^ index.php [L]
+</IfModule>
