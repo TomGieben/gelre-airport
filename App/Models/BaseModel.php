@@ -34,11 +34,11 @@ abstract class BaseModel
     /*
     * Query builder
     *
-    * @return self
+    * @return static
     */
-    public static function query(): self
+    public static function query(): static
     {
-        return new self();
+        return new static();
     }
 
     /**
@@ -54,7 +54,7 @@ abstract class BaseModel
         $models = [];
 
         foreach ($rows as $row) {
-            $models[] = new self($row);
+            $models[] = new static($row);
         }
 
         return $models;
@@ -68,13 +68,14 @@ abstract class BaseModel
      * @param mixed $value
      * @return array
      */
-    public function raw(string $sql, array $params = []): array
+    public function raw(string $sql, array $params = []): array|null
     {
         $stmt = $this->database->query($sql, $params);
         $rows = $stmt->fetchAll();
+        $models = null;
 
         foreach ($rows as $row) {
-            $models[] = new self($row);
+            $models[] = new static($row);
         }
 
         return $models;
@@ -147,7 +148,7 @@ abstract class BaseModel
         }
 
         $sql = "UPDATE $this->table SET " . implode(', ', $columns) . " WHERE " . implode(' AND ', $conditions);
-        $stmt = $this->database->query($sql, [...array_values($data), ...$params]);
+        $stmt = $this->database->query($sql, [...array_values($data), ...$params]); // dots is the spread operator
 
         if (!$stmt) {
             return false;

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Helpers\Request;
 use App\Helpers\Response;
 use App\Helpers\View;
+use App\Models\Passenger;
 use App\Models\User;
 
 class AuthController
@@ -18,7 +19,20 @@ class AuthController
     {
         $parameters = $request->getRequestParameters();
 
-        $_SESSION['user'] = $parameters['email'];
+        if (!isset($parameters['number']) || !isset($parameters['password']) || !is_numeric($parameters['number'])) {
+            return new View('auth/login');
+        }
+
+        $user = Passenger::query()->raw('SELECT * FROM Passagier WHERE passagiernummer = :number AND wachtwoord = :password', [
+            'number' => $parameters['number'],
+            'password' => $parameters['password']
+        ]);
+
+        if (!$user) {
+            return new View('auth/login');
+        }
+
+        $_SESSION['user'] = isset($user[0]) ? $user[0]->passagiernummer : null;
 
         return Response::redirect('/');
     }
@@ -28,11 +42,11 @@ class AuthController
         return new View('auth/register');
     }
 
-    public static function register(Request $request)
-    {
-        var_dump($request);
-        die;
-    }
+    // public static function register(Request $request)
+    // {
+    //     var_dump($request);
+    //     die;
+    // }
 
     public static function logout()
     {

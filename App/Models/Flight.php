@@ -6,8 +6,8 @@ use App\Models\BaseModel;
 
 class Flight extends BaseModel
 {
-    protected string $table = 'flight';
-    protected string $primaryKey = 'vluchtnummer';
+    protected string $table = 'Vlucht';
+    protected array $primaryKey = ['vluchtnummer'];
     protected array $columns = [
         'vluchtnummer',
         'bestemming',

@@ -57,7 +57,7 @@ class Database
      */
     private function connect(): void
     {
-        $dsn = "mysql:host=$this->host;dbname=$this->database;charset=utf8mb4";
+        $dsn = "sqlsrv:Server={$this->host};Database={$this->database};ConnectionPooling=0;TrustServerCertificate=1";
 
         try {
             $this->pdo = new PDO($dsn, $this->username, $this->password);

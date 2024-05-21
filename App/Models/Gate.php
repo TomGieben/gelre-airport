@@ -7,7 +7,7 @@ use App\Models\BaseModel;
 class Gate extends BaseModel
 {
     protected string $table = 'Gate';
-    protected string $primaryKey = 'gatecode';
+    protected array $primaryKey = ['gatecode'];
     protected array $columns = [
         'gatecode',
     ];

@@ -6,8 +6,8 @@
         <div class="card-body">
             <form method="POST" action="/login">
                 <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <label for="number">Nummer</label>
+                    <input type="number" class="form-control" id="number" name="number" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Wachtwoord</label>

@@ -7,9 +7,9 @@ use App\Models\BaseModel;
 class Passenger extends BaseModel
 {
     protected string $table = 'Passagier';
-    protected string $primaryKey = 'passagiersnummer';
+    protected array $primaryKey = ['passagiernummer'];
     protected array $columns = [
-        'passagiersnummer',
+        'passagiernummer',
         'naam',
         'vluchtnummer',
         'geslacht',

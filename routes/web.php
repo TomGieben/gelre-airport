@@ -18,6 +18,6 @@ Route::get('/me', [UserController::class, 'me']);
 // Auth routes
 Route::get('/login', [AuthController::class, 'showLogin'], false);
 Route::post('/login', [AuthController::class, 'login'], false);
-Route::get('/register', [AuthController::class, 'showRegister'], false);
-Route::post('/register', [AuthController::class, 'register'], false);
+// Route::get('/register', [AuthController::class, 'showRegister'], false);
+// Route::post('/register', [AuthController::class, 'register'], false);
 Route::post('/logout', [AuthController::class, 'logout']);
