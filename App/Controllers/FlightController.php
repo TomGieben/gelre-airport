@@ -13,7 +13,7 @@ class FlightController
         $today = date('Y-m-d');
         $parameters = $request->getRequestParameters();
 
-        if ($request->has('flightnumber') && !$request->has('reset')) {
+        if ($request->has('flightnumber')) {
             $flights = Flight::query()->raw("SELECT * FROM Vlucht WHERE vluchtnummer = :flightnumber AND vertrektijd >= :today", [
                 'flightnumber' => $parameters['flightnumber'],
                 'today' => $today,

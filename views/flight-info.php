@@ -1,17 +1,9 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Vluchten</h3>
+            <h3 class="card-title">Mijn vlucht info</h3>
         </div>
         <div class="card-body">
-            <form method="GET" action="/flights">
-                <div class="form-group">
-                    <label for="flightnumber">Vluchtnummer</label>
-                    <input type="text" class="form-control" id="flightnumber" name="flightnumber">
-                </div>
-                <button type="submit" class="btn btn-secondary">Zoeken</button>
-                <a href="/flights" class="btn btn-link">Reset</a>
-            </form>
             <table>
                 <thead>
                     <td>Vluchtnummer</td>

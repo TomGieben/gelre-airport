@@ -9,6 +9,6 @@ class WelcomeController
 {
     public static function index(Request $request)
     {
-        return new View('welcome', ['name' => 'World']);
+        return new View('welcome');
     }
 }

@@ -24,7 +24,7 @@ class Auth
     public static function user(): ?User
     {
         return new User([
-            'email' => $_SESSION['user']
+            'id' => $_SESSION['user']
         ]);
     }
 }

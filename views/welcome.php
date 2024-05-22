@@ -2,4 +2,4 @@
 
 use App\Helpers\Auth;
 
-echo Auth::user()->email;
+echo Auth::user()->id;
