@@ -9,10 +9,16 @@ use App\Controllers\WelcomeController;
 use App\Helpers\Route;
 
 Route::get('/', [WelcomeController::class, 'index']);
+
 Route::get('/flights', [FlightController::class, 'index']);
+
 Route::get('/luggage', [LuggageController::class, 'index']);
+Route::post('/luggage', [LuggageController::class, 'store']);
+
 Route::get('/flight-info', [UserController::class, 'flights']);
+
 Route::get('/passengers', [PassengerController::class, 'index']);
+
 Route::get('/me', [UserController::class, 'me']);
 
 // Auth routes

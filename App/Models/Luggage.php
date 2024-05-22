@@ -4,15 +4,15 @@ namespace App\Models;
 
 use App\Models\BaseModel;
 
-class Counter extends BaseModel
+class Luggage extends BaseModel
 {
     protected string $table = 'BagageObject';
     protected array $primaryKey = [
-        'passagiersnummer',
+        'passagiernummer',
         'objectvolgnummer'
     ];
     protected array $columns = [
-        'passagiersnummer',
+        'passagiernummer',
         'objectvolgnummer',
         'gewicht'
     ];

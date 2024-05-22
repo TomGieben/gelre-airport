@@ -25,9 +25,9 @@ abstract class BaseModel
         $this->database = $database;
 
         foreach ($data as $key => $value) {
-            if (in_array($key, $this->columns)) {
-                $this->$key = $value;
-            }
+            // if (in_array($key, $this->columns)) {
+            $this->$key = $value;
+            // }
         }
     }
 
