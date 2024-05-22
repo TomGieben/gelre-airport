@@ -5,6 +5,7 @@
 @import url('components/_containers.css');
 @import url('components/_nav.css');
 @import url('components/_footer.css');
+@import url('components/_table.css');
 
 body {
     font-family: var(--font-primary);
