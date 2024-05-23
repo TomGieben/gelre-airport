@@ -1,11 +1,11 @@
 .form-group {
-  margin-bottom: 20px; 
+	margin-bottom: 20px;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 5px; 
-  font-weight: bold; 
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
 }
 
 .form-group input[type="text"],
@@ -13,12 +13,12 @@
 .form-group input[type="email"],
 .form-group input[type="number"],
 .form-group textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  width: 100%;
-  box-sizing: border-box;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 16px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .form-group input[type="text"]:focus,
@@ -26,6 +26,26 @@
 .form-group input[type="email"]:focus,
 .form-group input[type="number"]:focus,
 .form-group textarea:focus {
-  border-color: var(--primary-color);
-  outline: none;
+	border-color: var(--primary-color);
+	outline: none;
+}
+
+.form-group select {
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 16px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.form-group select:focus {
+	border-color: var(--primary-color);
+	outline: none;
+}
+
+.form-group input[type="checkbox"] {
+	margin-right: 5px;
+	height: 20px;
+	width: 20px;
 }

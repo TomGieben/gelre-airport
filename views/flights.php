@@ -7,8 +7,24 @@
             <form method="GET" action="/flights">
                 <div class="form-group">
                     <label for="flightnumber">Vluchtnummer</label>
-                    <input type="text" class="form-control" id="flightnumber" name="flightnumber">
+                    <input type="text" class="form-control" id="flightnumber" name="flightnumber" value="<?= isset($_GET['flightnumber']) ? $_GET['flightnumber'] : '' ?>">
                 </div>
+                <?php if ($isEmployee) : ?>
+                    <div class="d-flex align-center">
+                        <div class="form-group margin-end">
+                            <label for="with-old">Weergeef oude vluchten</label>
+                            <input type="checkbox" class="form-control" id="with-old" name="with_old" <?= isset($_GET['with_old']) ? 'checked' : '' ?>>
+                        </div>
+                        <div class="form-group margin-end">
+                            <label for="sort-airport">Sorteer op luchthaven/bestemming</label>
+                            <input type="checkbox" class="form-control" id="sort-airport" name="sort_airport" <?= isset($_GET['sort_airport']) ? 'checked' : '' ?>>
+                        </div>
+                        <div class="form-group">
+                            <label for="sort-time">Sorteer op tijd</label>
+                            <input type="checkbox" class="form-control" id="sort-time" name="sort_time" <?= isset($_GET['sort_time']) ? 'checked' : '' ?>>
+                        </div>
+                    </div>
+                <?php endif ?>
                 <button type="submit" class="btn btn-secondary">Zoeken</button>
                 <a href="/flights" class="btn btn-link">Reset</a>
             </form>

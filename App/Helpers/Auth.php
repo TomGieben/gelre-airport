@@ -13,7 +13,7 @@ class Auth
      */
     public static function check(): bool
     {
-        return isset($_SESSION['user']);
+        return isset($_SESSION['user_id']);
     }
 
     /**
@@ -24,7 +24,8 @@ class Auth
     public static function user(): ?User
     {
         return new User([
-            'id' => $_SESSION['user']
+            'type' => $_SESSION['auth_type'],
+            'id' => $_SESSION['user_id']
         ]);
     }
 }

@@ -6,6 +6,13 @@
         <div class="card-body">
             <form method="POST" action="/login">
                 <div class="form-group">
+                    <label for="type">Type</label>
+                    <select name="type" id="type">
+                        <option value="passenger">Passagier</option>
+                        <option value="employee">Medewerker</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="number">Nummer</label>
                     <input type="number" class="form-control" id="number" name="number" required>
                 </div>

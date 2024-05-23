@@ -10,5 +10,16 @@ class User extends BaseModel
     protected array $primaryKey = ['gebruikersnaam'];
     protected array $columns = [
         'id',
+        'type',
     ];
+
+    public function isPassenger(): bool
+    {
+        return $this->type === 'passenger';
+    }
+
+    public function isEmployee(): bool
+    {
+        return $this->type === 'employee';
+    }
 }
