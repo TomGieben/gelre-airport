@@ -11,6 +11,8 @@ use App\Helpers\Route;
 Route::get('/', [WelcomeController::class, 'index']);
 
 Route::get('/flights', [FlightController::class, 'index']);
+Route::get('/flights/create', [FlightController::class, 'create']);
+Route::post('/flights/store', [FlightController::class, 'store']);
 
 Route::get('/luggage', [LuggageController::class, 'index']);
 Route::post('/luggage', [LuggageController::class, 'store']);

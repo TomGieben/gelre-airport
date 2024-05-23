@@ -25,8 +25,15 @@
                         </div>
                     </div>
                 <?php endif ?>
-                <button type="submit" class="btn btn-secondary">Zoeken</button>
-                <a href="/flights" class="btn btn-link">Reset</a>
+                <div class="d-flex align-center justify-between">
+                    <div>
+                        <button type="submit" class="btn btn-secondary">Zoeken</button>
+                        <a href="/flights" class="btn btn-link">Reset</a>
+                    </div>
+                    <?php if ($isEmployee) : ?>
+                        <a href="/flights/create" class="btn btn-primary">Nieuwe vlucht</a>
+                    <?php endif ?>
+                </div>
             </form>
             <table>
                 <thead>

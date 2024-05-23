@@ -17,6 +17,10 @@ body {
     padding: 0;
 }
 
+main {
+    min-height: 90dvh;
+}
+
 .bg-primary {
     background-color: var(--primary-color);
     color: #fff;

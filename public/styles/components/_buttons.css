@@ -49,8 +49,11 @@
 .btn-link:hover {
     background-color: transparent !important;
 }
-  
+
 .btn:hover {
     background-color: var(--primary-color);
 }
-  
+
+a.btn {
+    text-decoration: none;
+}

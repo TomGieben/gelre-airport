@@ -22,4 +22,11 @@ class User extends BaseModel
     {
         return $this->type === 'employee';
     }
+
+    public function redirectIfNotEmployee(): void
+    {
+        if (!$this->isEmployee()) {
+            header("Location: /");
+        }
+    }
 }

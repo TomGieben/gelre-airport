@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $env['APP_NAME'] ?></title>
-    <link rel="stylesheet" href="public/styles/app.css">
-    <link rel="icon" type="image/x-icon" href="public/images/favicon.png">
+    <link rel="stylesheet" href="<?= asset('styles/app.css') ?>">
+    <link rel="icon" type="image/x-icon" href="<?= asset('images/favicon.png') ?>">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
         <input type="checkbox" id="toggleNav" class="toggleNav">
         <nav class="bg-primary">
             <ul>
-                <?php if (true) : ?>
+                <?php if (App\Helpers\Auth::user()->isPassenger()) : ?>
                     <li><a href="/flights">Vluchten</a></li>
                     <li><a href="/luggage">Bagage</a></li>
                     <li><a href="/flight-info">Vlucht informatie</a></li>

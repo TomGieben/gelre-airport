@@ -7,6 +7,7 @@ use App\Helpers\Route;
 
 include __DIR__ . '/routes/web.php';
 include __DIR__ . '/env.php';
+include __DIR__ . '/helpers.php';
 
 session_start();
 

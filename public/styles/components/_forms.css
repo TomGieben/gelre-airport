@@ -12,6 +12,7 @@
 .form-group input[type="password"],
 .form-group input[type="email"],
 .form-group input[type="number"],
+.form-group input[type="datetime-local"],
 .form-group textarea {
 	padding: 10px;
 	border: 1px solid #ccc;
@@ -25,6 +26,7 @@
 .form-group input[type="password"]:focus,
 .form-group input[type="email"]:focus,
 .form-group input[type="number"]:focus,
+.form-group input[type="datetime-local"]:focus,
 .form-group textarea:focus {
 	border-color: var(--primary-color);
 	outline: none;
