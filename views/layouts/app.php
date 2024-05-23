@@ -17,17 +17,16 @@
         <input type="checkbox" id="toggleNav" class="toggleNav">
         <nav class="bg-primary">
             <ul>
-                <?php if (App\Helpers\Auth::user()->isPassenger()) : ?>
-                    <li><a href="/flights">Vluchten</a></li>
-                    <li><a href="/luggage">Bagage</a></li>
-                    <li><a href="/flight-info">Vlucht informatie</a></li>
-                <?php else : ?>
-                    <li><a href="/flights">Vluchten</a></li>
-                    <li><a href="/luggage">Bagage</a></li>
-                    <li><a href="/passengers">Passagiers</a></li>
-                <?php endif ?>
-
                 <?php if (App\Helpers\Auth::check()) : ?>
+                    <?php if (App\Helpers\Auth::user()->isPassenger()) : ?>
+                        <li><a href="/flights">Vluchten</a></li>
+                        <li><a href="/luggage">Bagage</a></li>
+                        <li><a href="/flight-info">Vlucht informatie</a></li>
+                    <?php else : ?>
+                        <li><a href="/flights">Vluchten</a></li>
+                        <li><a href="/luggage">Bagage</a></li>
+                        <li><a href="/passengers">Passagiers</a></li>
+                    <?php endif ?>
                     <li><a href="/me">Jouw account</a></li>
                     <li>
                         <form method="POST" action="/logout">
