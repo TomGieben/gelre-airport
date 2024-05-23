@@ -53,6 +53,10 @@ class AuthController
             'password' => $parameters['password']
         ]);
 
+        if (!$user) {
+            return new View('auth/login');
+        }
+
         $_SESSION['user_id'] = isset($user[0]) ? $user[0]->passagiernummer : null;
     }
 
