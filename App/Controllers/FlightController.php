@@ -64,7 +64,7 @@ class FlightController
             'max_totaalgewicht' => $parameters['max_weight_total'],
         ]);
 
-        return self::index($request);
+        return header('Location: /flights')
     }
 
     private static function validate(array $parameters): bool

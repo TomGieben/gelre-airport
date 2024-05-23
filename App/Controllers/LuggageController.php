@@ -43,6 +43,6 @@ class LuggageController
             'gewicht' => (float)$parameters['weight'],
         ]);
 
-        return self::index($request);
+        return header('Location: /luggage')
     }
 }

@@ -17,4 +17,9 @@ class Passenger extends BaseModel
         'stoel',
         'inchecktijdstip',
     ];
+
+    public static function getGenders(): array
+    {
+        return ['M', 'V', 'x'];
+    }
 }

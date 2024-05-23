@@ -18,13 +18,19 @@
                     <td>Gewicht</td>
                 </thead>
                 <tbody>
-                    <?php foreach ($luggage as $object) : ?>
+                    <?php if (empty($luggage)) : ?>
                         <tr>
-                            <td><?= $object->passagiernummer ?></td>
-                            <td><?= $object->objectvolgnummer ?></td>
-                            <td><?= $object->gewicht ?></td>
+                            <td colspan="3">Geen bagage gevonden</td>
                         </tr>
-                    <?php endforeach ?>
+                    <?php else : ?>
+                        <?php foreach ($luggage as $object) : ?>
+                            <tr>
+                                <td><?= $object->passagiernummer ?></td>
+                                <td><?= $object->objectvolgnummer ?></td>
+                                <td><?= $object->gewicht ?></td>
+                            </tr>
+                        <?php endforeach ?>
+                    <?php endif ?>
                 </tbody>
             </table>
         </div>

@@ -45,7 +45,7 @@
                     <label for="max-weight-total">Maximaal totaalgewicht</label>
                     <input type="number" name="max_weight_total" id="max-weight-total" class="form-control">
                 </div>
-                <button type="submit" class="btn btn-primary">Toevoegen</button>
+                <button type="submit" class="btn btn-secondary">Toevoegen</button>
             </form>
         </div>
     </div>

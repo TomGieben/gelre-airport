@@ -20,6 +20,8 @@ Route::post('/luggage', [LuggageController::class, 'store']);
 Route::get('/flight-info', [UserController::class, 'flights']);
 
 Route::get('/passengers', [PassengerController::class, 'index']);
+Route::get('/passengers/create', [PassengerController::class, 'create']);
+Route::post('/passengers/store', [PassengerController::class, 'store']);
 
 Route::get('/me', [UserController::class, 'me']);
 
