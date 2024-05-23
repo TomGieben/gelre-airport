@@ -6,23 +6,23 @@ use App\Helpers\Database;
 use App\Helpers\Route;
 
 include __DIR__ . '/routes/web.php';
-include __DIR__ . '/env.php';
 include __DIR__ . '/helpers.php';
 
 session_start();
+loadEnv(__DIR__ . '/.env');
 
 global $database;
 
-if (!isset($env) || empty($env)) {
+if (!isset($_ENV) || empty($_ENV)) {
     die('Environment configuration not found.');
 }
 
 if (!($database instanceof Database)) {
     $database = Database::config(
-        $env['DB_HOST'],
-        $env['DB_USERNAME'],
-        $env['DB_PASSWORD'],
-        $env['DB_DATABASE']
+        $_ENV['DB_HOST'],
+        $_ENV['DB_USERNAME'],
+        $_ENV['DB_PASSWORD'],
+        $_ENV['DB_DATABASE']
     );
 }
 

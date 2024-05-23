@@ -43,8 +43,6 @@ class View
      */
     public function render(): void
     {
-        require __DIR__ . '/../../env.php';
-
         extract($this->data);
 
         ob_start();
