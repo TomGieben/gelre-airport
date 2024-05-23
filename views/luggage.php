@@ -5,6 +5,18 @@
         </div>
         <div class="card-body">
             <form method="POST" action="/luggage">
+                <?php if (App\Helpers\Auth::user()->isEmployee() && !empty($passengers)) : ?>
+                    <div class="form-group">
+                        <label for="passenger">Passagier</label>
+                        <select name="passenger" id="passenger" class="form-control">
+                            <?php foreach ($passengers as $passenger) : ?>
+                                <option value="<?= $passenger->passagiernummer ?>">
+                                    <?= $passenger->passagiernummer ?> - <?= $passenger->naam ?>
+                                </option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                <?php endif ?>
                 <div class="form-group">
                     <label for="weight">Gewicht</label>
                     <input type="number" name="weight" id="weight" class="form-control" step="0.01">

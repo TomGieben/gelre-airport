@@ -6,19 +6,28 @@ use App\Helpers\Auth;
 use App\Helpers\Request;
 use App\Helpers\View;
 use App\Models\Luggage;
+use App\Models\Passenger;
 
 class LuggageController
 {
     public static function index()
     {
-        $passengerNumber = Auth::user()->id;
+        $passengers = [];
 
-        $luggage = Luggage::query()->raw("SELECT * FROM BagageObject WHERE passagiernummer = :passagiernummer", [
-            'passagiernummer' => $passengerNumber,
-        ]);
+        if (Auth::user()->isPassenger()) {
+            $passengerNumber = Auth::user()->id;
+
+            $luggage = Luggage::query()->raw("SELECT * FROM BagageObject WHERE passagiernummer = :passagiernummer", [
+                'passagiernummer' => $passengerNumber,
+            ]);
+        } else {
+            $luggage = Luggage::query()->all();
+            $passengers = Passenger::query()->all();
+        }
 
         return new View('luggage', [
             'luggage' => $luggage,
+            'passengers' => $passengers,
         ]);
     }
 
@@ -26,6 +35,10 @@ class LuggageController
     {
         $passengerNumber = Auth::user()->id;
         $parameters = $request->getRequestParameters();
+
+        if (Auth::user()->isEmployee() && isset($parameters['passenger'])) {
+            $passengerNumber = $parameters['passenger'];
+        }
 
         if (!isset($parameters['weight']) || !is_numeric($parameters['weight'])) {
             return self::index($request);
@@ -43,6 +56,6 @@ class LuggageController
             'gewicht' => (float)$parameters['weight'],
         ]);
 
-        return header('Location: /luggage')
+        return header('Location: /luggage');
     }
 }
