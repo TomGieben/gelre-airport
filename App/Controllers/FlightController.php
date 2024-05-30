@@ -16,7 +16,7 @@ class FlightController
     public static function index(Request $request)
     {
         $parameters = $request->getRequestParameters();
-        $perPage = 10;
+        $perPage = 12;
         $page = $request->get('page', 1);
         $isEmployee = Auth::user()->isEmployee();
         $query = self::buildQuery($request, $parameters, $isEmployee);

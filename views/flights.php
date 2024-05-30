@@ -35,32 +35,22 @@
                     <?php endif ?>
                 </div>
             </form>
-            <table>
-                <thead>
-                    <td>Vluchtnummer</td>
-                    <td>Bestemming</td>
-                    <td>Gatecode</td>
-                    <td>Max aantal</td>
-                    <td>Max gewicht pp</td>
-                    <td>Max gewicht totaal</td>
-                    <td>Vertrektijd</td>
-                    <td>Maatschappijcode</td>
-                </thead>
-                <tbody>
-                    <?php foreach ($flights as $flight) : ?>
-                        <tr>
-                            <td><?= $flight->vluchtnummer ?></td>
-                            <td><?= $flight->bestemming ?></td>
-                            <td><?= $flight->gatecode ?></td>
-                            <td><?= $flight->max_aantal ?></td>
-                            <td><?= $flight->max_gewicht_pp ?></td>
-                            <td><?= $flight->max_totaalgewicht ?></td>
-                            <td><?= $flight->vertrektijd ?></td>
-                            <td><?= $flight->maatschappijcode ?></td>
-                        </tr>
-                    <?php endforeach ?>
-                </tbody>
-            </table>
+            <div class="flights-container">
+                <?php foreach ($flights as $flight) : ?>
+                    <div class="flight-card">
+                        <div class="flight-content">
+                            <h3>Vluchtnummer: <?= $flight->vluchtnummer ?></h3>
+                            <p>Bestemming: <?= $flight->bestemming ?></p>
+                            <p>Gatecode: <?= $flight->gatecode ?></p>
+                            <p>Max aantal: <?= $flight->max_aantal ?></p>
+                            <p>Max gewicht pp: <?= $flight->max_gewicht_pp ?></p>
+                            <p>Max gewicht totaal: <?= $flight->max_totaalgewicht ?></p>
+                            <p>Vertrektijd: <?= $flight->vertrektijd ?></p>
+                            <p>Maatschappijcode: <?= $flight->maatschappijcode ?></p>
+                        </div>
+                    </div>
+                <?php endforeach ?>
+            </div>
             <?= $paginator->render(); ?>
         </div>
     </div>

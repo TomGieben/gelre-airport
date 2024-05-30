@@ -1,0 +1,47 @@
+.flights-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.flight-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 300px;
+    flex: 1 1 calc(33.333% - 40px);
+    /* 3 cards per row, with some gap */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+}
+
+.flight-card:hover {
+    transform: translateY(-5px);
+}
+
+.flight-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.flight-content p {
+    margin: 5px 0;
+}
+
+@media (max-width: 768px) {
+    .flight-card {
+        flex: 1 1 calc(50% - 40px);
+        /* 2 cards per row on medium screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .flight-card {
+        flex: 1 1 100%;
+        /* 1 card per row on small screens */
+    }
+}
