@@ -110,9 +110,9 @@ class Request
      * @param string $parameter The parameter to get.
      * @return mixed Returns the parameter value if it exists, otherwise null.
      */
-    public function get(string $parameter): mixed
+    public function get(string $parameter, mixed $fallback = null): mixed
     {
-        return $this->requestParameters[$parameter] ?? null;
+        return $this->requestParameters[$parameter] ?? $fallback;
     }
 
     /**

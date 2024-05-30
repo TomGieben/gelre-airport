@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Helpers\Auth;
+use App\Helpers\Paginator;
 use App\Helpers\Request;
 use App\Helpers\View;
 use App\Models\Counter;
@@ -15,10 +16,20 @@ class PassengerController
     {
         Auth::user()->redirectIfNotEmployee();
 
-        $passengers = Passenger::query()->raw("SELECT * FROM Passagier ORDER BY passagiernummer DESC");
+        $perPage = 10;
+        $page = $request->get('page', 1);
+
+        $passengers = Passenger::query()
+            ->paginate($perPage, $page)
+            ->raw("SELECT * FROM Passagier ORDER BY passagiernummer DESC");
+
+        $total = Passenger::query()->raw("SELECT COUNT(*) as count FROM Passagier")[0]->count;
+
+        $paginator = new Paginator($perPage, $page, $total);
 
         return new View('passengers', [
             'passengers' => $passengers,
+            'paginator' => $paginator,
         ]);
     }
 
@@ -26,8 +37,8 @@ class PassengerController
     {
         Auth::user()->redirectIfNotEmployee();
 
-        $flights = Flight::query()->all();
-        $counters = Counter::query()->all();
+        $flights = Flight::query()->raw("SELECT vluchtnummer FROM Vlucht WHERE vertrektijd > :now", ['now' => date('Y-m-d H:i:s')]);
+        $counters = Counter::query()->raw("SELECT balienummer FROM Balie");
         $genders = Passenger::getGenders();
 
         return new View('passenger-create', [
@@ -82,6 +93,18 @@ class PassengerController
         ])[0]->count;
 
         if ($seat > 0) {
+            return false;
+        }
+
+        $maxAmountOfPeople = Flight::query()->raw("SELECT max_aantal FROM Vlucht WHERE vluchtnummer = :flightnumber", [
+            'flightnumber' => $parameters['flightnumber'],
+        ])[0]->max_aantal;
+
+        $peopleOnFlight = Passenger::query()->raw("SELECT COUNT(*) as count FROM Passagier WHERE vluchtnummer = :flightnumber", [
+            'flightnumber' => $parameters['flightnumber'],
+        ])[0]->count;
+
+        if ($peopleOnFlight >= $maxAmountOfPeople) {
             return false;
         }
 

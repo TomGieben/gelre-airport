@@ -10,6 +10,7 @@ abstract class BaseModel
     protected array $primaryKey = ['id'];
     protected array $columns = [];
     protected Database $database;
+    private ?string $paginateQuery = null;
 
     /**
      * BaseModel constructor.
@@ -46,9 +47,29 @@ abstract class BaseModel
      *
      * @return array
      */
+    public function paginate(int $perPage = 10, int $page = 1): static
+    {
+        $offset = ($page - 1) * $perPage;
+        $sql = "OFFSET $offset ROWS FETCH NEXT $perPage ROWS ONLY";
+
+        $this->paginateQuery = $sql;
+
+        return $this;
+    }
+
+    /**
+     * Get all models
+     *
+     * @return array
+     */
     public function all(): array
     {
         $sql = "SELECT * FROM $this->table";
+
+        if ($this->paginateQuery) {
+            $sql .= ' ' . $this->paginateQuery;
+        }
+
         $stmt = $this->database->query($sql);
         $rows = $stmt->fetchAll();
         $models = [];
@@ -70,6 +91,10 @@ abstract class BaseModel
      */
     public function raw(string $sql, array $params = []): array|null
     {
+        if ($this->paginateQuery) {
+            $sql .= ' ' . $this->paginateQuery;
+        }
+
         $stmt = $this->database->query($sql, $params);
         $rows = $stmt->fetchAll();
         $models = null;

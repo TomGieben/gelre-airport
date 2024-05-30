@@ -61,6 +61,7 @@
                     <?php endforeach ?>
                 </tbody>
             </table>
+            <?= $paginator->render(); ?>
         </div>
     </div>
 </div>

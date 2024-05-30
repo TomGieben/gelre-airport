@@ -37,6 +37,7 @@
                     <?php endif ?>
                 </tbody>
             </table>
+            <?= $paginator->render(); ?>
         </div>
     </div>
 </div>

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Helpers\Auth;
+use App\Helpers\Paginator;
 use App\Helpers\Request;
 use App\Helpers\View;
 use App\Models\Airport;
@@ -15,14 +16,21 @@ class FlightController
     public static function index(Request $request)
     {
         $parameters = $request->getRequestParameters();
+        $perPage = 10;
+        $page = $request->get('page', 1);
         $isEmployee = Auth::user()->isEmployee();
         $query = self::buildQuery($request, $parameters, $isEmployee);
+        $total = Flight::query()->raw("SELECT COUNT(*) as count FROM Vlucht")[0]->count;
+        $flights = Flight::query()
+            ->paginate($perPage, $page)
+            ->raw($query);
 
-        $flights = Flight::query()->raw($query);
+        $paginator = new Paginator($perPage, $page, $total);
 
         return new View('flights', [
             'flights' => $flights,
             'isEmployee' => $isEmployee,
+            'paginator' => $paginator,
         ]);
     }
 
@@ -96,6 +104,7 @@ class FlightController
     {
         $today = date('Y-m-d H:i:s');
         $query = "SELECT * FROM Vlucht WHERE 1=1 ";
+        $addOrderBy = true;
 
         if (!$isEmployee) {
             $query .= "AND vertrektijd >= '$today' ";
@@ -112,6 +121,7 @@ class FlightController
             }
 
             if ($request->has('sort_airport') || $request->has('sort_time')) {
+                $addOrderBy = false;
                 $query .= "ORDER BY ";
 
                 if ($request->has('sort_airport')) {
@@ -124,6 +134,10 @@ class FlightController
 
                 $query = rtrim($query, ', ');
             }
+        }
+
+        if ($addOrderBy) {
+            $query .= "ORDER BY vertrektijd";
         }
 
         return $query;
