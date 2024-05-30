@@ -27,7 +27,6 @@
                         <li><a href="/luggage">Bagage</a></li>
                         <li><a href="/passengers">Passagiers</a></li>
                     <?php endif ?>
-                    <li><a href="/me">Jouw account</a></li>
                     <li>
                         <form method="POST" action="/logout">
                             <button type="submit">Uitloggen</button>

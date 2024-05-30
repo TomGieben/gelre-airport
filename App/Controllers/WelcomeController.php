@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helpers\Auth;
 use App\Helpers\Request;
 use App\Helpers\View;
 
@@ -9,6 +10,12 @@ class WelcomeController
 {
     public static function index(Request $request)
     {
-        return new View('welcome');
+        $userId = Auth::user()->id;
+        $type = Auth::user()->type;
+
+        return new View('welcome', [
+            'userId' => $userId,
+            'type' => $type,
+        ]);
     }
 }

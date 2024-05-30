@@ -10,13 +10,6 @@ use App\Models\Passenger;
 
 class UserController
 {
-    public static function me()
-    {
-        return new View('me', [
-            'email' => Auth::user()->id,
-        ]);
-    }
-
     public static function flights()
     {
         $passenger = Passenger::query()->find([

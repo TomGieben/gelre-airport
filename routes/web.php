@@ -23,8 +23,6 @@ Route::get('/passengers', [PassengerController::class, 'index']);
 Route::get('/passengers/create', [PassengerController::class, 'create']);
 Route::post('/passengers/store', [PassengerController::class, 'store']);
 
-Route::get('/me', [UserController::class, 'me']);
-
 // Auth routes
 Route::get('/login', [AuthController::class, 'show'], false);
 Route::post('/login', [AuthController::class, 'login'], false);
