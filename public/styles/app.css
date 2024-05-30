@@ -7,6 +7,7 @@
 @import url('components/_footer.css');
 @import url('components/_table.css');
 @import url('components/_paginator.css');
+@import url('components/_alert.css');
 @import url('components/_flight-overview.css');
 
 body {

@@ -1,4 +1,5 @@
 <div class="container">
+    <?= App\Helpers\Error::show() ?>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Vlucht toevoegen</h3>

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Helpers\Auth;
+use App\Helpers\Error;
 use App\Helpers\Paginator;
 use App\Helpers\Request;
 use App\Helpers\View;
@@ -58,6 +59,8 @@ class FlightController
         $flightNumber = Flight::query()->raw("SELECT MAX(vluchtnummer) as max FROM Vlucht")[0]->max + 1;
 
         if (!self::validate($parameters)) {
+            Error::add('Niet alle velden zijn correct ingevuld');
+
             return self::create();
         }
 

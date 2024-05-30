@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Helpers\Auth;
+use App\Helpers\Error;
 use App\Helpers\Paginator;
 use App\Helpers\Request;
 use App\Helpers\View;
@@ -57,6 +58,8 @@ class PassengerController
         $passengerNumber = Passenger::query()->raw("SELECT MAX(passagiernummer) as max FROM Passagier")[0]->max + 1;
 
         if (!self::validate($parameters)) {
+            Error::add('Er is iets misgegaan bij het toevoegen van de passagier.');
+
             return self::create();
         }
 

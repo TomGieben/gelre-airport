@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Helpers\Auth;
+use App\Helpers\Error;
 use App\Helpers\Paginator;
 use App\Helpers\Request;
 use App\Helpers\View;
@@ -68,6 +69,8 @@ class LuggageController
         }
 
         if (!isset($parameters['weight']) || !is_numeric($parameters['weight'])) {
+            Error::add('Gewicht is verplicht en moet een getal zijn');
+
             return self::index($request);
         }
 
@@ -108,6 +111,8 @@ class LuggageController
         )[0]->total;
 
         if (($totalWeightOfLuggage + (float)$parameters['weight']) > $maxWeightOfFlight) {
+            Error::add('Het totale gewicht van de bagage mag niet hoger zijn dan het maximale gewicht van de vlucht');
+
             return self::index($request);
         }
 
