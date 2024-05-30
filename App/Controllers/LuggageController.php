@@ -23,7 +23,7 @@ class LuggageController
 
             $luggage = Luggage::query()
                 ->paginate($perPage, $page)
-                ->raw("SELECT * FROM BagageObject WHERE passagiernummer = :passagiernummer", [
+                ->raw("SELECT * FROM BagageObject WHERE passagiernummer = :passagiernummer ORDER BY passagiernummer", [
                     'passagiernummer' => $passengerNumber,
                 ]);
 

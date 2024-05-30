@@ -22,8 +22,27 @@ class UserController
             'flightnumber' => $flightNumber,
         ]);
 
+        $checkin = Flight::query()->raw(
+            "SELECT 
+                IM.balienummer AS incheckcounter,
+                IB.balienummer AS bagagecounter,
+                IV.balienummer AS flightcounter
+            FROM Vlucht AS V
+            INNER JOIN IncheckenMaatschappij AS IM
+                ON V.maatschappijcode = IM.maatschappijcode
+            INNER JOIN IncheckenBestemming AS IB
+                ON V.bestemming = IB.luchthavencode
+            INNER JOIN IncheckenVlucht AS IV
+                ON V.vluchtnummer = IV.vluchtnummer
+            WHERE V.vluchtnummer = :flightnumber",
+            [
+                'flightnumber' => $flightNumber,
+            ]
+        );
+
         return new View('flight-info', [
             'flights' => $flights,
+            'checkin' => $checkin,
         ]);
     }
 }

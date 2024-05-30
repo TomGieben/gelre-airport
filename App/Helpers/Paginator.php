@@ -42,13 +42,15 @@ class Paginator
         }
 
         // Page numbers
-        for ($i = 0; $i <= $amountOfPages; $i++) {
-            $pageNumber = $currentPage + $i;
+        if ($totalPages > 1) {
+            for ($i = 0; $i <= $amountOfPages; $i++) {
+                $pageNumber = $currentPage + $i;
 
-            if ($pageNumber == $currentPage) {
-                $paginationHtml .= '<span class="current">' . $pageNumber . '</span>';
-            } else {
-                $paginationHtml .= '<a href="?page=' . $pageNumber . '">' . $pageNumber . '</a>';
+                if ($pageNumber == $currentPage) {
+                    $paginationHtml .= '<span class="current">' . $pageNumber . '</span>';
+                } else {
+                    $paginationHtml .= '<a href="?page=' . $pageNumber . '">' . $pageNumber . '</a>';
+                }
             }
         }
 

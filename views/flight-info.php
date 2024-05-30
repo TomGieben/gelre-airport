@@ -30,6 +30,28 @@
                     <?php endforeach ?>
                 </tbody>
             </table>
+            <table>
+                <thead>
+                    <td>Incheckbalie</td>
+                    <td>Bagagebalie</td>
+                    <td>Vluchtbalie</td>
+                </thead>
+                <tbody>
+                    <?php if (!empty($checkin)) : ?>
+                        <?php foreach ($checkin as $row) : ?>
+                            <tr>
+                                <td><?= $row->incheckcounter ?></td>
+                                <td><?= $row->bagagecounter ?></td>
+                                <td><?= $row->flightcounter ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <tr>
+                            <td colspan="3">Geen gegevens gevonden.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
