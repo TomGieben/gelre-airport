@@ -67,7 +67,7 @@ abstract class BaseModel
         $sql = "SELECT * FROM $this->table";
 
         if ($this->paginateQuery) {
-            $sql .= ' ' . $this->paginateQuery;
+            $sql .= ' ORDER BY ' . $this->primaryKey[0] . ' ' . $this->paginateQuery;
         }
 
         $stmt = $this->database->query($sql);
