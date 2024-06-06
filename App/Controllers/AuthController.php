@@ -53,33 +53,47 @@ class AuthController
 
     private static function loginPassenger(array $parameters)
     {
-        $user = User::query()->raw('SELECT * FROM Passagier WHERE passagiernummer = :number AND wachtwoord = :password', [
+        $user = User::query()->raw('SELECT passagiernummer, wachtwoord FROM Passagier WHERE passagiernummer = :number', [
             'number' => $parameters['number'],
-            'password' => password_hash($parameters['password'], PASSWORD_DEFAULT),
         ]);
 
-        if (!$user) {
+        if (!isset($user[0])) {
             Error::add('Geen gebruiker gevonden met deze gegevens');
 
             return new View('auth/login');
         }
 
-        $_SESSION['user_id'] = isset($user[0]) ? $user[0]->passagiernummer : null;
+        $user = $user[0];
+
+        if (!password_verify($parameters['password'], $user->wachtwoord)) {
+            Error::add('Geen gebruiker gevonden met deze gegevens');
+
+            return new View('auth/login');
+        }
+
+        $_SESSION['user_id'] = isset($user) ? $user->passagiernummer : null;
     }
 
     private static function loginEmployee(array $parameters)
     {
-        $user = Counter::query()->raw('SELECT * FROM Balie WHERE balienummer = :number AND wachtwoord = :password', [
+        $user = Counter::query()->raw('SELECT balienummer, wachtwoord FROM Balie WHERE balienummer = :number', [
             'number' => $parameters['number'],
-            'password' => password_hash($parameters['password'], PASSWORD_DEFAULT),
         ]);
 
-        if (!$user) {
+        if (!isset($user[0])) {
             Error::add('Geen gebruiker gevonden met deze gegevens');
 
             return new View('auth/login');
         }
 
-        $_SESSION['user_id'] = isset($user[0]) ? $user[0]->balienummer : null;
+        $user = $user[0];
+
+        if (!password_verify($parameters['password'], $user->wachtwoord)) {
+            Error::add('Geen gebruiker gevonden met deze gegevens');
+
+            return new View('auth/login');
+        }
+
+        $_SESSION['user_id'] = isset($user) ? $user->balienummer : null;
     }
 }
