@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helpers\Error;
 use App\Helpers\Request;
 use App\Helpers\Response;
 use App\Helpers\View;
@@ -21,10 +22,14 @@ class AuthController
         $parameters = $request->getRequestParameters();
 
         if (!isset($parameters['number']) || !isset($parameters['password']) || !is_numeric($parameters['number'])) {
+            Error::add('Vul alle velden in');
+
             return new View('auth/login');
         }
 
         if (!isset($parameters['type']) || !in_array($parameters['type'], ['employee', 'passenger'])) {
+            Error::add('Ongeldige gebruikerstype');
+
             return new View('auth/login');
         }
 
@@ -50,10 +55,12 @@ class AuthController
     {
         $user = User::query()->raw('SELECT * FROM Passagier WHERE passagiernummer = :number AND wachtwoord = :password', [
             'number' => $parameters['number'],
-            'password' => $parameters['password']
+            'password' => password_hash($parameters['password'], PASSWORD_DEFAULT),
         ]);
 
         if (!$user) {
+            Error::add('Geen gebruiker gevonden met deze gegevens');
+
             return new View('auth/login');
         }
 
@@ -64,10 +71,12 @@ class AuthController
     {
         $user = Counter::query()->raw('SELECT * FROM Balie WHERE balienummer = :number AND wachtwoord = :password', [
             'number' => $parameters['number'],
-            'password' => $parameters['password']
+            'password' => password_hash($parameters['password'], PASSWORD_DEFAULT),
         ]);
 
         if (!$user) {
+            Error::add('Geen gebruiker gevonden met deze gegevens');
+
             return new View('auth/login');
         }
 

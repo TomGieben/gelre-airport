@@ -59,8 +59,6 @@ class FlightController
         $flightNumber = Flight::query()->raw("SELECT MAX(vluchtnummer) as max FROM Vlucht")[0]->max + 1;
 
         if (!self::validate($parameters)) {
-            Error::add('Niet alle velden zijn correct ingevuld');
-
             return self::create();
         }
 
@@ -89,6 +87,8 @@ class FlightController
             $parameters['max_weight_pp'],
             $parameters['max_weight_total']
         )) {
+            Error::add('Niet alle velden zijn correct ingevuld');
+
             return false;
         }
 
@@ -97,6 +97,8 @@ class FlightController
             || !is_numeric($parameters['max_weight_pp'])
             || !is_numeric($parameters['max_weight_total'])
         ) {
+            Error::add('Maximaal aantal, maximaal gewicht per persoon en maximaal totaalgewicht moeten getallen zijn');
+
             return false;
         }
 

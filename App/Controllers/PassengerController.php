@@ -58,8 +58,6 @@ class PassengerController
         $passengerNumber = Passenger::query()->raw("SELECT MAX(passagiernummer) as max FROM Passagier")[0]->max + 1;
 
         if (!self::validate($parameters)) {
-            Error::add('Er is iets misgegaan bij het toevoegen van de passagier.');
-
             return self::create();
         }
 
@@ -71,7 +69,7 @@ class PassengerController
             'balienummer' => $parameters['counter'],
             'stoel' => $parameters['seat'],
             'inchecktijdstip' => $date,
-            'wachtwoord' => 'unsafe-pass',
+            'wachtwoord' => password_hash($parameters['password'], PASSWORD_DEFAULT)
         ]);
 
         return header('Location: /passengers');
@@ -85,8 +83,24 @@ class PassengerController
             $parameters['gender'],
             $parameters['counter'],
             $parameters['seat'],
-            $parameters['checkin']
+            $parameters['checkin'],
+            $parameters['password'],
+            $parameters['password_confirm']
         )) {
+            Error::add('Niet alle velden zijn ingevuld.');
+
+            return false;
+        }
+
+        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $parameters['password'])) {
+            Error::add('Het wachtwoord moet minimaal 8 karakters lang zijn en minimaal 1 hoofdletter, 1 kleine letter en 1 cijfer bevatten.');
+
+            return false;
+        }
+
+        if ($parameters['password'] !== $parameters['password_confirm']) {
+            Error::add('De wachtwoorden komen niet overeen.');
+
             return false;
         }
 
@@ -96,6 +110,8 @@ class PassengerController
         ])[0]->count;
 
         if ($seat > 0) {
+            Error::add('Deze stoel is al bezet.');
+
             return false;
         }
 
@@ -108,6 +124,8 @@ class PassengerController
         ])[0]->count;
 
         if ($peopleOnFlight >= $maxAmountOfPeople) {
+            Error::add('Deze vlucht zit vol.');
+
             return false;
         }
 

@@ -5,7 +5,6 @@
         </div>
         <div class="card-body">
             <form method="POST" action="/luggage">
-                <?= App\Helpers\Error::show() ?>
                 <?php if (App\Helpers\Auth::user()->isEmployee() && !empty($passengers)) : ?>
                     <div class="form-group">
                         <label for="passenger">Passagier</label>

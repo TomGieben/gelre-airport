@@ -1,5 +1,4 @@
 <div class="container">
-    <?= App\Helpers\Error::show() ?>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Passagier toevoegen</h3>
@@ -41,6 +40,14 @@
                 <div class="form-group">
                     <label for="checkin">Inchecktijdstip</label>
                     <input type="datetime-local" name="checkin" id="checkin" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password">Wachtwoord</label>
+                    <input type="password" name="password" id="password" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password_confirm">Wachtwoord bevestigen</label>
+                    <input type="password" name="password_confirm" id="password_confirm" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-secondary">Toevoegen</button>
             </form>

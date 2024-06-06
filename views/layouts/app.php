@@ -42,6 +42,9 @@
     <div class="fix"></div>
 
     <main class="wrapper">
+        <div class="container">
+            <?= App\Helpers\Error::show() ?>
+        </div>
         @content
     </main>
 
