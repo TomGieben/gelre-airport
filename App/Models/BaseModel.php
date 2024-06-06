@@ -96,11 +96,18 @@ abstract class BaseModel
         }
 
         $stmt = $this->database->query($sql, $params);
+
+        if (strpos($sql, 'SELECT') === false) {
+            return null;
+        }
+
         $rows = $stmt->fetchAll();
         $models = null;
 
-        foreach ($rows as $row) {
-            $models[] = new static($row);
+        if (!$rows || empty($rows)) {
+            foreach ($rows as $row) {
+                $models[] = new static($row);
+            }
         }
 
         return $models;

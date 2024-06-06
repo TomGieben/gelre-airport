@@ -79,6 +79,7 @@ class Database
     public function query(string $sql, array $params = []): PDOStatement|false
     {
         $stmt = $this->pdo->prepare($sql);
+
         $stmt->execute($params);
 
         return $stmt;

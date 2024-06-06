@@ -4,6 +4,7 @@ use App\Controllers\AuthController;
 use App\Controllers\FlightController;
 use App\Controllers\LuggageController;
 use App\Controllers\PassengerController;
+use App\Controllers\SeederController;
 use App\Controllers\UserController;
 use App\Controllers\WelcomeController;
 use App\Helpers\Route;
@@ -27,3 +28,6 @@ Route::post('/passengers/store', [PassengerController::class, 'store']);
 Route::get('/login', [AuthController::class, 'show'], false);
 Route::post('/login', [AuthController::class, 'login'], false);
 Route::post('/logout', [AuthController::class, 'logout']);
+
+// This route is only used for development purposes
+// Route::get('/seeder', [SeederController::class, 'index'], false); 
