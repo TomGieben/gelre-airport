@@ -30,4 +30,4 @@ Route::post('/login', [AuthController::class, 'login'], false);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 // This route is only used for development purposes
-// Route::get('/seeder', [SeederController::class, 'index'], false); 
+// Route::get('/seeder', [SeederController::class, 'index'], false);

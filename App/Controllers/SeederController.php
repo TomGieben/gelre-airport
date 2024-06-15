@@ -21,52 +21,23 @@ class SeederController
     {
         set_time_limit(0); // Prevent the script from timing out
 
-        $passengers = Passenger::query()->all();
+        $toHash = 'unsafe-pass';
+        $password = password_hash($toHash, PASSWORD_DEFAULT);
 
-        if (empty($passengers)) {
-            return;
-        }
+        Passenger::query()->raw(
+            "UPDATE Passagier SET
+                wachtwoord = :wachtwoord",
+            [
+                'wachtwoord' => $password,
+            ]
+        );
 
-        foreach ($passengers as $passenger) {
-            if (password_verify($passenger->wachtwoord, $passenger->wachtwoord)) {
-                continue;
-            }
-
-            $password = password_hash($passenger->wachtwoord, PASSWORD_DEFAULT);
-
-            Passenger::query()->raw(
-                "UPDATE Passagier SET
-                    wachtwoord = :wachtwoord
-                WHERE passagiernummer = :passagiernummer",
-                [
-                    'wachtwoord' => $password,
-                    'passagiernummer' => $passenger->passagiernummer,
-                ]
-            );
-        }
-
-        $counters = Counter::query()->all();
-
-        if (empty($counters)) {
-            return;
-        }
-
-        foreach ($counters as $counter) {
-            if (password_verify($counter->wachtwoord, $counter->wachtwoord)) {
-                continue;
-            }
-
-            $password = password_hash($counter->wachtwoord, PASSWORD_DEFAULT);
-
-            Counter::query()->raw(
-                "UPDATE Balie SET
-                    wachtwoord = :wachtwoord
-                WHERE balienummer = :balienummer",
-                [
-                    'wachtwoord' => $password,
-                    'balienummer' => $counter->balienummer,
-                ]
-            );
-        }
+        Counter::query()->raw(
+            "UPDATE Balie SET
+                wachtwoord = :wachtwoord",
+            [
+                'wachtwoord' => $password
+            ]
+        );
     }
 }
