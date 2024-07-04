@@ -14,6 +14,7 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/flights', [FlightController::class, 'index']);
 Route::get('/flights/create', [FlightController::class, 'create']);
 Route::post('/flights/store', [FlightController::class, 'store']);
+Route::get('/flights/{flight}', [FlightController::class, 'show']);
 
 Route::get('/luggage', [LuggageController::class, 'index']);
 Route::post('/luggage', [LuggageController::class, 'store']);
@@ -23,6 +24,8 @@ Route::get('/flight-info', [UserController::class, 'flights']);
 Route::get('/passengers', [PassengerController::class, 'index']);
 Route::get('/passengers/create', [PassengerController::class, 'create']);
 Route::post('/passengers/store', [PassengerController::class, 'store']);
+Route::get('/passengers/{passenger}/edit', [PassengerController::class, 'edit']);
+Route::post('/passengers/{passenger}/update', [PassengerController::class, 'update']);
 
 // Auth routes
 Route::get('/login', [AuthController::class, 'show'], false);

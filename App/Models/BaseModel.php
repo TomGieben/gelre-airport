@@ -165,7 +165,7 @@ abstract class BaseModel
      * @param array $data
      * @return self|false
      */
-    public function update(array $data): self|false
+    public function update(array $data, array $primaryKeys): self|false
     {
         $columns = array_map(fn ($column) => "$column = ?", array_keys($data));
         $conditions = [];
@@ -173,18 +173,17 @@ abstract class BaseModel
 
         foreach ($this->primaryKey as $key) {
             $conditions[] = "$key = ?";
-            $params[] = $data[$key];
-            unset($data[$key]);
+            $params[] = $primaryKeys[$key];
         }
 
         $sql = "UPDATE $this->table SET " . implode(', ', $columns) . " WHERE " . implode(' AND ', $conditions);
-        $stmt = $this->database->query($sql, [...array_values($data), ...$params]); // dots is the spread operator
+        $stmt = $this->database->query($sql, array_merge(array_values($data), $params));
 
         if (!$stmt) {
             return false;
         }
 
-        return $this->find($params);
+        return $this->find($primaryKeys);
     }
 
     /**

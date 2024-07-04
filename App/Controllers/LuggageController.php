@@ -116,6 +116,36 @@ class LuggageController
             return self::index($request);
         }
 
+        $maxObjectsForPassenger = Passenger::query()->raw(
+            "SELECT
+                M.max_objecten_pp
+            FROM dbo.Passagier AS P
+                INNER JOIN dbo.IncheckenMaatschappij AS IM
+                    ON P.balienummer = IM.balienummer
+                INNER JOIN dbo.Maatschappij AS M
+                    ON IM.maatschappijcode = M.maatschappijcode
+            WHERE passagiernummer = :number",
+            [
+                'number' => $passengerNumber,
+            ]
+        )[0]->max_objecten_pp;
+
+        $totalObjectsOfPassenger = Luggage::query()->raw(
+            "SELECT
+                COUNT(B.objectvolgnummer) as total
+            FROM dbo.BagageObject AS B
+            WHERE B.passagiernummer = :number",
+            [
+                'number' => $passengerNumber,
+            ]
+        )[0]->total;
+
+        if ($totalObjectsOfPassenger >= $maxObjectsForPassenger) {
+            Error::add('Het maximale aantal bagage objecten is bereikt');
+
+            return self::index($request);
+        }
+
         $luggage = Luggage::query()->create([
             'passagiernummer' => $passengerNumber,
             'objectvolgnummer' => $heighestFollowNumber,

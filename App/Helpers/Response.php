@@ -20,7 +20,17 @@ class Response
     public static function error(int $code, string $message): void
     {
         header("HTTP/1.0 $code");
-        echo "$code" . PHP_EOL . "$message";
+
+        echo '<link rel="stylesheet" href="' . asset('styles/app.css') . '">';
+
+        echo "
+            <div class='error-code'>
+                <span>$code</span>
+            </div> 
+            <div class='error-message'>
+                <span>$message</span>
+            </div>
+        ";
 
         exit;
     }

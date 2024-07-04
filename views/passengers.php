@@ -7,6 +7,15 @@
             </div>
         </div>
         <div class="card-body">
+            <form method="GET" action="/passengers">
+                <?php if (App\Helpers\Auth::user()->isEmployee()) : ?>
+                    <div class="form-group">
+                        <label for="number">Passagiernummer</label>
+                        <input type="number" name="number" id="number" class="form-control" value="<?= $searchForNumber ?? '' ?>">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Zoeken</button>
+                <?php endif ?>
+            </form>
             <table>
                 <thead>
                     <td>Passagiernummer</td>
@@ -16,6 +25,9 @@
                     <td>Balienummer</td>
                     <td>Stoel</td>
                     <td>Inchecktijdstip</td>
+                    <?php if (App\Helpers\Auth::user()->isEmployee()) : ?>
+                        <td>Acties</td>
+                    <?php endif ?>
                 </thead>
                 <tbody>
                     <?php if (empty($passengers)) : ?>
@@ -32,6 +44,11 @@
                                 <td><?= $passenger->balienummer ?></td>
                                 <td><?= $passenger->stoel ?></td>
                                 <td><?= $passenger->inchecktijdstip ?></td>
+                                <?php if (App\Helpers\Auth::user()->isEmployee()) : ?>
+                                    <td>
+                                        <a href="/passengers/<?= $passenger->passagiernummer ?>/edit" class="btn btn-primary">Bewerken</a>
+                                    </td>
+                                <?php endif ?>
                             </tr>
                         <?php endforeach ?>
                     <?php endif ?>

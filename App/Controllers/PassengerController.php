@@ -17,12 +17,20 @@ class PassengerController
     {
         Auth::user()->redirectIfNotEmployee();
 
+        $searchForNumber = $request->get('number') ?? null;
         $perPage = 10;
         $page = $request->get('page', 1);
 
         $passengers = Passenger::query()
             ->paginate($perPage, $page)
-            ->raw("SELECT * FROM Passagier ORDER BY passagiernummer DESC");
+            ->raw("
+                SELECT * 
+                FROM Passagier 
+                " . ($searchForNumber ? 'WHERE passagiernummer = :number' : '') . "
+                ORDER BY passagiernummer DESC
+            ", (
+                $searchForNumber ? ['number' => $searchForNumber] : []
+            ));
 
         $total = Passenger::query()->raw("SELECT COUNT(*) as count FROM Passagier")[0]->count;
 
@@ -31,6 +39,7 @@ class PassengerController
         return new View('passengers', [
             'passengers' => $passengers,
             'paginator' => $paginator,
+            'searchForNumber' => $searchForNumber,
         ]);
     }
 
@@ -57,7 +66,7 @@ class PassengerController
         $date = date('Y-m-d H:i:s', strtotime($parameters['checkin']));
         $passengerNumber = Passenger::query()->raw("SELECT MAX(passagiernummer) as max FROM Passagier")[0]->max + 1;
 
-        if (!self::validate($parameters)) {
+        if (!self::validateCreate($parameters)) {
             return self::create();
         }
 
@@ -75,39 +84,104 @@ class PassengerController
         return header('Location: /passengers');
     }
 
-    private static function validate(array $parameters): bool
+    public static function edit(string $passenger)
     {
-        if (!isset(
-            $parameters['name'],
-            $parameters['flightnumber'],
-            $parameters['gender'],
-            $parameters['counter'],
-            $parameters['seat'],
-            $parameters['checkin'],
-            $parameters['password'],
-            $parameters['password_confirm']
-        )) {
-            Error::add('Niet alle velden zijn ingevuld.');
+        Auth::user()->redirectIfNotEmployee();
 
-            return false;
+        $passenger = Passenger::query()->find(['passagiernummer' => $passenger]);
+
+        if (!$passenger) {
+            return header('Location: /passengers');
         }
 
-        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $parameters['password'])) {
-            Error::add('Het wachtwoord moet minimaal 8 karakters lang zijn en minimaal 1 hoofdletter, 1 kleine letter en 1 cijfer bevatten.');
+        $flights = Flight::query()->raw("SELECT vluchtnummer FROM Vlucht WHERE vertrektijd > :now", ['now' => date('Y-m-d H:i:s')]);
+        $counters = Counter::query()->raw("SELECT balienummer FROM Balie");
+        $genders = Passenger::getGenders();
 
-            return false;
+        return new View('passenger-edit', [
+            'passenger' => $passenger,
+            'flights' => $flights,
+            'counters' => $counters,
+            'genders' => $genders,
+        ]);
+    }
+
+    public static function update(Request $request, string $passenger)
+    {
+        Auth::user()->redirectIfNotEmployee();
+        $parameters = $request->getRequestParameters();
+        $date = date('Y-m-d H:i:s', strtotime($parameters['checkin']));
+
+        $parameters['passenger'] = $passenger;
+
+        if (!self::validate($parameters, true)) {
+            return self::edit($passenger);
         }
 
-        if ($parameters['password'] !== $parameters['password_confirm']) {
-            Error::add('De wachtwoorden komen niet overeen.');
+        Passenger::query()->update([
+            'naam' => $parameters['name'],
+            'vluchtnummer' => $parameters['flightnumber'],
+            'geslacht' => $parameters['gender'],
+            'balienummer' => $parameters['counter'],
+            'stoel' => $parameters['seat'],
+            'inchecktijdstip' => $date,
+        ], [
+            'passagiernummer' => $passenger,
+        ]);
 
-            return false;
+        return header('Location: /passengers');
+    }
+
+    private static function validate(array $parameters, bool $isUpdate = false): bool
+    {
+        $requiredParameters = [
+            'name',
+            'flightnumber',
+            'gender',
+            'counter',
+            'seat',
+            'checkin'
+        ];
+
+        if (!$isUpdate) {
+            $requiredParameters[] = 'password';
+            $requiredParameters[] = 'password_confirm';
         }
 
-        $seat = Passenger::query()->raw("SELECT COUNT(*) as count FROM Passagier WHERE stoel = :seat AND vluchtnummer = :flightnumber", [
-            'seat' => $parameters['seat'],
-            'flightnumber' => $parameters['flightnumber'],
-        ])[0]->count;
+        foreach ($requiredParameters as $param) {
+            if (!isset($parameters[$param])) {
+                Error::add('Niet alle velden zijn ingevuld.');
+                return false;
+            }
+        }
+
+        if (!$isUpdate) {
+            if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $parameters['password'])) {
+                Error::add('Het wachtwoord moet minimaal 8 karakters lang zijn en minimaal 1 hoofdletter, 1 kleine letter en 1 cijfer bevatten.');
+
+                return false;
+            }
+
+            if ($parameters['password'] !== $parameters['password_confirm']) {
+                Error::add('De wachtwoorden komen niet overeen.');
+
+                return false;
+            }
+        }
+
+        if ($isUpdate) {
+            $seat = Passenger::query()->raw("SELECT COUNT(*) as count FROM Passagier WHERE stoel = :seat AND vluchtnummer = :flightnumber AND passagiernummer != :passenger", [
+                'seat' => $parameters['seat'],
+                'flightnumber' => $parameters['flightnumber'],
+                'passenger' => $parameters['passenger'],
+            ])[0]->count;
+        } else {
+            $seat = Passenger::query()->raw("SELECT COUNT(*) as count FROM Passagier WHERE stoel = :seat AND vluchtnummer = :flightnumber", [
+                'seat' => $parameters['seat'],
+                'flightnumber' => $parameters['flightnumber'],
+            ])[0]->count;
+        }
+
 
         if ($seat > 0) {
             Error::add('Deze stoel is al bezet.');

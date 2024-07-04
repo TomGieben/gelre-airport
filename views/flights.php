@@ -47,6 +47,9 @@
                             <p>Max gewicht totaal: <?= $flight->max_totaalgewicht ?></p>
                             <p>Vertrektijd: <?= $flight->vertrektijd ?></p>
                             <p>Maatschappijcode: <?= $flight->maatschappijcode ?></p>
+                            <a href="/flights/<?= $flight->vluchtnummer ?>" class="btn btn-primary">
+                                Bekijk vlucht
+                            </a>
                         </div>
                     </div>
                 <?php endforeach ?>

@@ -35,6 +35,22 @@ class FlightController
         ]);
     }
 
+    public static function show(string $flight)
+    {
+        Auth::user()->redirectIfNotEmployee();
+
+        $passengers = Flight::query()->raw("
+            SELECT * 
+            FROM Passagier 
+            WHERE vluchtnummer = :flight
+        ", ['flight' => $flight]);
+
+        return new View('flight', [
+            'passengers' => $passengers,
+            'flight' => $flight,
+        ]);
+    }
+
     public static function create()
     {
         Auth::user()->redirectIfNotEmployee();
