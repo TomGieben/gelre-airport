@@ -47,12 +47,12 @@ class View
 
         ob_start();
         require $this->path . $this->view . '.php';
-        $viewContent = ob_get_clean();
-
+        $viewContent = htmlspecialchars(ob_get_clean(), ENT_QUOTES, 'UTF-8');
+    
         ob_start();
         require $this->path . 'layouts/' . $this->layout . '.php';
         $layoutContent = ob_get_clean();
-
+    
         echo str_replace('@content', $viewContent, $layoutContent);
     }
 }

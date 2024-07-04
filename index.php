@@ -1,11 +1,11 @@
 <?php
 
+header('Content-Security-Policy: default-src \'self\';');
+
 require __DIR__ . '/autoload.php';
 
 use App\Helpers\Database;
 use App\Helpers\Route;
-use App\Models\Counter;
-use App\Models\Passenger;
 
 include __DIR__ . '/routes/web.php';
 include __DIR__ . '/helpers.php';
