@@ -10,6 +10,7 @@ use App\Controllers\WelcomeController;
 use App\Helpers\Route;
 
 Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/privacy', [WelcomeController::class, 'privacy']);
 
 Route::get('/flights', [FlightController::class, 'index']);
 Route::get('/flights/create', [FlightController::class, 'create']);

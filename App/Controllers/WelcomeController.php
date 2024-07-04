@@ -18,4 +18,9 @@ class WelcomeController
             'type' => $type,
         ]);
     }
+
+    public static function privacy()
+    {
+        return new View('privacy');
+    }
 }
