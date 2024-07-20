@@ -21,7 +21,7 @@ class FlightController
         $page = $request->get('page', 1);
         $isEmployee = Auth::user()->isEmployee();
         $query = self::buildQuery($request, $parameters, $isEmployee);
-        $total = Flight::query()->raw("SELECT COUNT(*) as count FROM Vlucht")[0]->count;
+        $total = Flight::query()->raw("SELECT COUNT(*) as count FROM Vlucht WHERE Vlucht.vertrektijd >= GETDATE()")[0]->count;
         $flights = Flight::query()
             ->paginate($perPage, $page)
             ->raw($query);

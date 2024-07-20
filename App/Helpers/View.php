@@ -39,20 +39,42 @@ class View
     }
 
     /**
+     * Make the parameters safe to use in the view.
+     * 
+     * @param array $data The data to make safe.
+     * @return array The safe data.
+     */
+    private function safeParameters(array $data): array
+    {
+        $safeData = [];
+
+        foreach ($data as $key => $value) {
+            if (!is_string($value)) {
+                $safeData[$key] = $value;
+                continue;
+            }
+
+            $safeData[$key] = htmlspecialchars($value);
+        }
+
+        return $safeData;
+    }
+
+    /**
      * Render the view within the layout.
      */
     public function render(): void
     {
-        extract($this->data);
+        extract($this->safeParameters($this->data));
 
         ob_start();
         require $this->path . $this->view . '.php';
-        $viewContent = htmlspecialchars(ob_get_clean(), ENT_QUOTES, 'UTF-8');
-    
+        $viewContent = ob_get_clean();
+
         ob_start();
         require $this->path . 'layouts/' . $this->layout . '.php';
         $layoutContent = ob_get_clean();
-    
+
         echo str_replace('@content', $viewContent, $layoutContent);
     }
 }
